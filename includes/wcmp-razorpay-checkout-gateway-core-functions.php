@@ -10,3 +10,13 @@ if (!function_exists('woocommerce_inactive_notice')) {
         <?php
     }
 }
+
+if (!function_exists('others_razorpay_plugin_inactive_notice')) {
+	function others_razorpay_plugin_inactive_notice() {
+        ?>
+        <div id="message" class="error">
+            <p><?php printf(__('%sWCMp Razorpay Checkout Gateway is inactive. %s Please deactivate others razorpay plugin to bypass conflict', 'wcmp-razorpay-checkout-gateway'), '<strong>', '</strong>'); ?></p>
+        </div>
+        <?php
+    }
+}

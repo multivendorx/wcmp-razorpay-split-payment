@@ -475,7 +475,6 @@ function woocommerce_razorpay_init()
             $api = $this->getRazorpayApiInstance();
 
             $data = $this->getOrderCreationData($orderId);
-            $create_vendor_transaction = $this->create_transaction_fron_order($orderId);
             try
             {
                 $razorpayOrder = $api->order->create($data);
@@ -486,14 +485,17 @@ function woocommerce_razorpay_init()
             }
 
             $razorpayOrderId = $razorpayOrder['id'];
-
-            if ($razorpayOrderId) {
-                if (!empty($create_vendor_transaction)) {
-                    foreach ($create_vendor_transaction as $vendor_id => $commission_ids) {
-                        $WCMp->payment_gateway->payment_gateways['razorpay']->vendor = get_wcmp_vendor($vendor_id);
-                        $WCMp->payment_gateway->payment_gateways['razorpay']->commissions = array_unique($commission_ids);
-                        $WCMp->payment_gateway->payment_gateways['razorpay']->transaction_mode = 'auto';
-                        $WCMp->payment_gateway->payment_gateways['razorpay']->record_transaction();
+            if (WCMP_Razorpay_Checkout_Gateway_Dependencies::wcmp_active_check()) {
+                $create_vendor_transaction = $this->create_transaction_fron_order($orderId);
+                $is_split = get_wcmp_vendor_settings('is_split', 'payment', 'razorpay');
+                if ($razorpayOrderId && !empty($is_split)) {
+                    if (!empty($create_vendor_transaction)) {
+                        foreach ($create_vendor_transaction as $vendor_id => $commission_ids) {
+                            $WCMp->payment_gateway->payment_gateways['razorpay']->vendor = get_wcmp_vendor($vendor_id);
+                            $WCMp->payment_gateway->payment_gateways['razorpay']->commissions = array_unique($commission_ids);
+                            $WCMp->payment_gateway->payment_gateways['razorpay']->transaction_mode = 'auto';
+                            $WCMp->payment_gateway->payment_gateways['razorpay']->record_transaction();
+                        }
                     }
                 }
             }
@@ -583,10 +585,17 @@ function woocommerce_razorpay_init()
                     self::WC_ORDER_ID  => (string) $orderId,
                 ),
             );
-            $payment_distribution_list = $this->generate_payment_distribution_list($orderId);
-            if( isset( $payment_distribution_list['transfers'] ) && !empty( $payment_distribution_list['transfers'] ) && count( $payment_distribution_list['transfers'] ) > 0 ) {
-                $data['transfers'] = $payment_distribution_list['transfers'];
+
+            if (WCMP_Razorpay_Checkout_Gateway_Dependencies::wcmp_active_check()) {
+                $is_split = get_wcmp_vendor_settings('is_split', 'payment', 'razorpay');
+                if (!empty($is_split)) {
+                    $payment_distribution_list = $this->generate_payment_distribution_list($orderId);
+                    if( isset( $payment_distribution_list['transfers'] ) && !empty( $payment_distribution_list['transfers'] ) && count( $payment_distribution_list['transfers'] ) > 0 ) {
+                        $data['transfers'] = $payment_distribution_list['transfers'];
+                    }
+                }
             }
+            
             return $data;
         }
 

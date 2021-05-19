@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: WCMp Vendor Membership 2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/dualcube/dc-woocommerce-multi-"
 "vendor/issues\n"
-"POT-Creation-Date: 2021-05-05 08:17+0000\n"
+"POT-Creation-Date: 2021-05-19 06:22+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,16 +17,11 @@ msgstr ""
 "Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
 
-#: classes/class-wcmp-vendor-razorpay-license.php:107
-msgid " Activation"
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:108
-msgid " API Key Activation"
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:468
-msgid "%s activated. "
+#: includes/wcmp-razorpay-checkout-gateway-core-functions.php:18
+#, php-format
+msgid ""
+"%sWCMp Razorpay Checkout Gateway is inactive. %s Please deactivate others "
+"razorpay plugin to bypass conflict"
 msgstr ""
 
 #: includes/wcmp-razorpay-checkout-gateway-core-functions.php:8
@@ -37,70 +32,12 @@ msgid ""
 "%sinstall & activate WooCommerce%s"
 msgstr ""
 
-#: classes/class-wcmp-vendor-razorpay-license.php:328
-msgid ""
-"<b>Warning!</b> You're blocking external requests which means you won't be "
-"able to get %s updates. Please add %s to %s."
+#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:57
+msgid "Account Number"
 msgstr ""
 
-#: classes/class-wcmp-vendor-razorpay-license.php:387
-msgid "Activated"
-msgstr ""
-
-#: classes/class-wcmp-license-admin.php:33 
-#: classes/class-wcmp-vendor-razorpay-license.php:110
-msgid "Activation"
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:354
-msgid "API Key"
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:350
-msgid "API Key Activation"
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:511
-msgid "API Key deactivated. "
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:371
-msgid "API Key Deactivation"
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:362
-msgid "API Key Status"
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:219
-msgid ""
-"Attempt to migrate data failed. Deactivate then reactive this plugin or "
-"theme, then enter your API Key on the settings screen to receive software "
-"updates. Contact support if assistance is required."
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:474
-msgid ""
-"Connection failed to the License Key API server. Try again later. There may "
-"be a problem on your server preventing outgoing requests, or the store is "
-"blocking your request to activate the plugin/theme."
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:375
-msgid "Deactivate API Key"
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:387
-msgid "Deactivated"
-msgstr ""
-
-#: classes/class-wcmp-vendor-razorpay-license.php:575
-msgid "Deactivates an API Key so it can be used on another blog."
-msgstr ""
-
-#: classes/class-wcmp-license-admin.php:34 
-#: classes/class-wcmp-vendor-razorpay-license.php:111
-msgid "Deactivation"
+#: admin/class-wcmp-settings-payment-razorpay.php:51
+msgid "Enable Split Payment"
 msgstr ""
 
 #. URI of the plugin
@@ -108,41 +45,70 @@ msgstr ""
 msgid "https://wc-marketplace.com/"
 msgstr ""
 
-#: classes/class-wcmp-license-admin.php:32
-msgid "License"
+#: classes/class-wcmp-gateway-razor-pay.php:58
+msgid "Invalid payment method"
 msgstr ""
 
-#: classes/class-wcmp-vendor-razorpay-license.php:358
-msgid "Product ID"
+#: admin/class-wcmp-settings-payment-razorpay.php:36
+msgid "Key ID"
 msgstr ""
 
-#: classes/class-wcmp-vendor-razorpay-license.php:311
+#: admin/class-wcmp-settings-payment-razorpay.php:44
+msgid "Key Secret"
+msgstr ""
+
+#: classes/class-wcmp-gateway-razor-pay.php:45
+msgid "New transaction has been initiated"
+msgstr ""
+
+#: classes/class-wcmp-gateway-razor-pay.php:64
+msgid "Please update your Razorpay Account information to receive commission"
+msgstr ""
+
+#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:43
+#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:51
+#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:69
+msgid "Razorpay"
+msgstr ""
+
+#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:21
+#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:23
+msgid "Razorpay Account Id"
+msgstr ""
+
+#: classes/class-wcmp-gateway-razor-pay.php:61
 msgid ""
-"The <strong>%s</strong> API Key has not been activated, so the %s is "
-"inactive! %sClick here%s to activate <strong>%s</strong>."
+"Razorpay payout setting is not configured properly. Please contact site "
+"administrator"
 msgstr ""
 
-#: classes/class-wcmp-vendor-razorpay-license.php:564
-msgid ""
-"The API Key could not be deactivated. Use the API Key Deactivation tab to "
-"manually deactivate the API Key before activating a new API Key. If all else "
-"fails, go to Plugins, then deactivate and reactivate this plugin, or if a "
-"theme change themes, then change back to this theme, then go to the Settings "
-"for this plugin/theme and enter the API Key information again to activate it."
-" Also check the My Account dashboard to see if the API Key for this site was "
-"still active before the error message was displayed."
+#: admin/class-wcmp-settings-payment-razorpay.php:83
+msgid "Razorpay Payout Settings Updated"
+msgstr ""
+
+#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:33
+msgid "Razorpay Route Account Id"
+msgstr ""
+
+#: admin/class-wcmp-settings-payment-razorpay.php:33
+msgid "Razorpay setting"
+msgstr ""
+
+#: classes/class-wcmp-gateway-razor-pay.php:113
+#, php-format
+msgid "Total commissions earned from %1$s as at %2$s on %3$s"
 msgstr ""
 
 #. Author of the plugin
 msgid "WC Marketplace"
 msgstr ""
 
-#. Name of the plugin
-msgid "WCMp Razorpay Checkout Gateway"
-msgstr ""
-
 #. Description of the plugin
 msgid ""
-"WCMp Razorpay Checkout Gateway is a payment gateway for pay with woocommerce "
-"as well as split payment with multivendor marketplace."
+"WCMp Razorpay Split Checkout Gateway is a payment gateway for pay with "
+"woocommerce as well as split payment with WCMp multivendor marketplace."
+msgstr ""
+
+#. Name of the plugin
+msgid "WCMp Razorpay Split Payment"
 msgstr ""

@@ -8,6 +8,8 @@ class WCMP_Razorpay_Checkout_Gateway {
     public $text_domain;
     private $file;
     public $license;
+    public $connect_razorpay;
+    public $razorpay_admin;
 
     public function __construct($file) {
         $this->file = $file;
@@ -17,8 +19,6 @@ class WCMP_Razorpay_Checkout_Gateway {
         $this->text_domain = WCMP_RAZORPAY_CHECKOUT_GATEWAY_TEXT_DOMAIN;
         $this->version = WCMP_RAZORPAY_CHECKOUT_GATEWAY_PLUGIN_VERSION;
 
-        require_once $this->plugin_path . 'classes/class-wcmp-vendor-razorpay-license.php';        
-        $this->license =  new WCMP_Vendor_Razorpay_License( $this->file, $this->plugin_path, WCMP_VENDOR_RAZORPAY_PLUGIN_PRODUCT_ID, $this->version, 'plugin', WCMP_VENDOR_RAZORPAY_PLUGIN_SERVER_URL, WCMP_VENDOR_RAZORPAY_PLUGIN_SOFTWARE_TITLE, $this->text_domain  );
         require_once $this->plugin_path . 'classes/class-wcmp-razorpay-checkout-payment.php';        
         add_action('init', array(&$this, 'init'), 0);
     }
@@ -29,6 +29,21 @@ class WCMP_Razorpay_Checkout_Gateway {
     function init() {
         // Init Text Domain
         $this->load_plugin_textdomain();
+
+        if (class_exists('WCMp')) {
+            require_once $this->plugin_path . 'classes/class-wcmp-gateway-razor-pay.php';
+            $this->connect_razorpay = new WCMp_Gateway_RazorPay();
+
+            require_once $this->plugin_path . 'classes/class-wcmp-razorpay-checkout-gateway-admin.php';
+            $this->razorpay_admin = new WCMP_Razorpay_Checkout_Gateway_Admin();
+
+            add_filter('wcmp_payment_gateways', array(&$this, 'add_wcmp_razorpay_payment_gateway'));
+        }
+    }
+
+    public function add_wcmp_razorpay_payment_gateway($load_gateways) {
+        $load_gateways[] = 'WCMp_Gateway_RazorPay';
+        return $load_gateways;
     }
 
     /**

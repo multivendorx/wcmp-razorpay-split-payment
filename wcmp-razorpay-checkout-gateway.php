@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: WCMp Razorpay Checkout Gateway
+ * Plugin Name: WCMp Razorpay Split Payment
  * Plugin URI: https://wc-marketplace.com/
- * Description: WCMp Razorpay Checkout Gateway is a payment gateway for pay with woocommerce as well as split payment with multivendor marketplace.
+ * Description: WCMp Razorpay Split Checkout Gateway is a payment gateway for pay with woocommerce as well as split payment with WCMp multivendor marketplace.
  * Author: WC Marketplace
  * Version: 1.0.0
  * Author URI: https://wc-marketplace.com/
@@ -32,7 +32,12 @@ if (!defined('WCMP_RAZORPAY_CHECKOUT_GATEWAY_TEXT_DOMAIN')) {
 if(!WCMP_Razorpay_Checkout_Gateway_Dependencies::woocommerce_active_check()){
     add_action('admin_notices', 'woocommerce_inactive_notice');
 }
-if (!class_exists('WCMP_Razorpay_Checkout_Gateway') && WCMP_Razorpay_Checkout_Gateway_Dependencies::woocommerce_active_check()) {
+
+if(WCMP_Razorpay_Checkout_Gateway_Dependencies::others_razorpay_plugin_active_check()){
+    add_action('admin_notices', 'others_razorpay_plugin_inactive_notice');
+}
+
+if (!class_exists('WCMP_Razorpay_Checkout_Gateway') && WCMP_Razorpay_Checkout_Gateway_Dependencies::woocommerce_active_check() && !WCMP_Razorpay_Checkout_Gateway_Dependencies::others_razorpay_plugin_active_check()) {
     require_once( 'classes/class-wcmp-razorpay-checkout-gateway.php' );
     global $WCMP_Razorpay_Checkout_Gateway;
     $WCMP_Razorpay_Checkout_Gateway = new WCMP_Razorpay_Checkout_Gateway(__FILE__);
