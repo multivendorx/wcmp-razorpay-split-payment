@@ -3,7 +3,7 @@ Contributors: WCMp, rajsekharchatterjee11
 Tags: razorpay checkout gateway, wcmp, wc marketplace, commission, vendor, WooCommerce, multivendor, multi vendor, multi seller, parallel payment, chain payment, split payment
 Donate link: https://wc-marketplace.com/donate
 Requires at least: 4.2
-Tested up to: 5.7.1
+Tested up to: 5.7.2
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
