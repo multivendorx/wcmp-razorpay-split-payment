@@ -6,7 +6,6 @@
  * Author: WC Marketplace
  * Version: 1.0.0
  * Author URI: https://wc-marketplace.com/
- *
  * Text Domain: wcmp-razorpay-checkout-gateway
  * Domain Path: /languages/
  */
