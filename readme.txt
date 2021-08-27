@@ -58,6 +58,8 @@ Ans. This plugin is applicable for WCMp version 3.7.1+.
 * Added - Compatibility with WooCommerce 5.6.0.
 * Added - Multi payment support with other split payment.
 * Fixed - Payment mode is not showing #1.
+* Dev - Added `wcmp_razorpay_enabled` filter.
+* Dev - Added `wcmp_razorpay_gateway_title` filter.
 * Updated - Language File.
 
 = 1.0.0 =
