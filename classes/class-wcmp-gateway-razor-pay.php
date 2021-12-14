@@ -9,6 +9,7 @@ use Razorpay\Api\Api;
 class WCMp_Gateway_RazorPay extends WCMp_Payment_Gateway {
 
     public $id;
+    public $gateway_title;
     public $message = array();
     private $test_mode = false;
     private $payout_mode = 'true';
@@ -19,6 +20,7 @@ class WCMp_Gateway_RazorPay extends WCMp_Payment_Gateway {
 
     public function __construct() {
         $this->id = 'razorpay';
+        $this->gateway_title = apply_filters('wcmp_razorpay_gateway_title', __('WCMp Razorpay', 'dc-woocommerce-multi-vendor'));
         $this->enabled = get_wcmp_vendor_settings('payment_method_razorpay', 'payment');
         $this->key_id = get_wcmp_vendor_settings('key_id', 'payment', 'razorpay');
         $this->key_secret = get_wcmp_vendor_settings('key_secret', 'payment', 'razorpay');

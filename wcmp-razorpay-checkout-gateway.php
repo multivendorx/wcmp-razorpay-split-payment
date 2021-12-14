@@ -4,7 +4,7 @@
  * Plugin URI: https://wc-marketplace.com/addons/
  * Description: WCMp Razorpay Split Checkout Gateway is a payment gateway for pay with woocommerce as well as split payment with WCMp multivendor marketplace.
  * Author: WC Marketplace
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author URI: https://wc-marketplace.com/
  * Text Domain: wcmp-razorpay-checkout-gateway
  * Domain Path: /languages/

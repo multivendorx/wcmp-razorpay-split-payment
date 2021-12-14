@@ -519,7 +519,9 @@ function woocommerce_razorpay_init()
                         $vendor = get_wcmp_vendor( get_post_field( 'post_author', $suborder->get_id() ) );
                         $vendor_payment_method = get_user_meta( $vendor->id, '_vendor_payment_mode', true );
                         $vendor_razorpay_account_id = get_user_meta( $vendor->id, '_vendor_razorpay_account_id', true );
-                        if ( $vendor_payment_method == 'razorpay' && $vendor_razorpay_account_id ) {
+                        $vendor_payment_method_check = $vendor_payment_method == 'razorpay' ? true : false;
+                        $razorpay_enabled = apply_filters('wcmp_razorpay_enabled', $vendor_payment_method_check);
+                        if ( $razorpay_enabled && $vendor_razorpay_account_id ) {
                             $vendor_order = wcmp_get_order( $suborder->get_id() );
                             $vendor_commission = round( $vendor_order->get_commission_total( 'edit' ), 2 );
                             $commission_id = get_post_meta($suborder->get_id(), '_commission_id', true) ? get_post_meta($suborder->get_id(), '_commission_id') : array();
@@ -610,7 +612,9 @@ function woocommerce_razorpay_init()
                         $vendor = get_wcmp_vendor( get_post_field( 'post_author', $suborder->get_id() ) );
                         $vendor_payment_method = get_user_meta( $vendor->id, '_vendor_payment_mode', true );
                         $vendor_razorpay_account_id = get_user_meta( $vendor->id, '_vendor_razorpay_account_id', true );
-                        if ( $vendor_payment_method == 'razorpay' && $vendor_razorpay_account_id ) {
+                        $vendor_payment_method_check = $vendor_payment_method == 'razorpay' ? true : false;
+                        $razorpay_enabled = apply_filters('wcmp_razorpay_enabled', $vendor_payment_method_check);
+                        if ( $razorpay_enabled && $vendor_razorpay_account_id ) {
                             $vendor_order = wcmp_get_order( $suborder->get_id() );
                             $vendor_commission = round( $vendor_order->get_commission_total( 'edit' ), 2 );
                             if ($vendor_commission > 0) {
