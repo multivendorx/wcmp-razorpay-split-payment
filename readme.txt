@@ -3,7 +3,7 @@ Contributors: WCMp, rajsekharchatterjee11
 Tags: razorpay checkout gateway, wcmp, wc marketplace, commission, vendor, WooCommerce, multivendor, multi vendor, multi seller, parallel payment, chain payment, split payment
 Donate link: https://wc-marketplace.com/donate
 Requires at least: 4.2
-Tested up to: 5.8
+Tested up to: 5.8.2
 Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -53,9 +53,9 @@ Ans. This plugin is applicable for WCMp version 3.7.1+.
 1. Payment Gateway Settings Panel.
 2. WooCommerce Checkout Option
 
-= 1.0.1 - 2021-08-28 =
-* Added - Compatibility with WordPress 5.8.
-* Added - Compatibility with WooCommerce 5.6.0.
+= 1.0.1 - 2021-12-14 =
+* Added - Compatibility with WordPress 5.8.2.
+* Added - Compatibility with WooCommerce 5.9.0.
 * Added - Multi payment support with other split payment.
 * Fixed - Payment mode is not showing #1.
 * Dev - Added `wcmp_razorpay_enabled` filter.
