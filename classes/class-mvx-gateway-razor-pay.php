@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 use Razorpay\Api\Api;
 
-class WCMp_Gateway_RazorPay extends WCMp_Payment_Gateway {
+class MVX_Gateway_RazorPay extends MVX_Payment_Gateway {
 
     public $id;
     public $gateway_title;
@@ -20,23 +20,23 @@ class WCMp_Gateway_RazorPay extends WCMp_Payment_Gateway {
 
     public function __construct() {
         $this->id = 'razorpay';
-        $this->gateway_title = apply_filters('wcmp_razorpay_gateway_title', __('WCMp Razorpay', 'dc-woocommerce-multi-vendor'));
-        $this->enabled = get_wcmp_vendor_settings('payment_method_razorpay', 'payment');
-        $this->key_id = get_wcmp_vendor_settings('key_id', 'payment', 'razorpay');
-        $this->key_secret = get_wcmp_vendor_settings('key_secret', 'payment', 'razorpay');
+        $this->gateway_title = apply_filters('mvx_razorpay_gateway_title', __('MVX Razorpay', 'dc-woocommerce-multi-vendor'));
+        $this->enabled = get_mvx_vendor_settings('payment_method_razorpay', 'payment');
+        $this->key_id = get_mvx_vendor_settings('key_id', 'payment', 'razorpay');
+        $this->key_secret = get_mvx_vendor_settings('key_secret', 'payment', 'razorpay');
         if (!empty($this->key_id) && !empty($this->key_secret) ) {
             $this->api = new Api($this->key_id, $this->key_secret);
         }
     }
     
-    public function gateway_logo() { global $WCMp; return $WCMp->plugin_url . 'assets/images/'.$this->id.'.png'; }
+    public function gateway_logo() { global $MVX; return $MVX->plugin_url . 'assets/images/'.$this->id.'.png'; }
 
     public function process_payment($vendor, $commissions = array(), $transaction_mode = 'auto', $transfer_args = array()) {
         $this->vendor = $vendor;
         $this->commissions = $commissions;
         $this->currency = get_woocommerce_currency();
         $this->transaction_mode = $transaction_mode;
-        $this->reciver_email = wcmp_get_user_meta($this->vendor->id, '_vendor_razorpay_account_id', true);
+        $this->reciver_email = mvx_get_user_meta($this->vendor->id, '_vendor_razorpay_account_id', true);
         if ($this->validate_request()) {
             $paypal_response = $this->process_razorpay_payout();
             doProductVendorLOG(json_encode($paypal_response['error']));
@@ -44,7 +44,7 @@ class WCMp_Gateway_RazorPay extends WCMp_Payment_Gateway {
                 $this->commissions = $paypal_response['seccess']['commission_id'];
                 $this->record_transaction();
                 if ($this->transaction_id) {
-                    return array('message' => __('New transaction has been initiated', 'wcmp-razorpay-checkout-gateway'), 'type' => 'success', 'transaction_id' => $this->transaction_id);
+                    return array('message' => __('New transaction has been initiated', 'mvx-razorpay-checkout-gateway'), 'type' => 'success', 'transaction_id' => $this->transaction_id);
                 }
             } else {
                 return false;
@@ -55,21 +55,21 @@ class WCMp_Gateway_RazorPay extends WCMp_Payment_Gateway {
     }
 
     public function validate_request() {
-        global $WCMp;
+        global $MVX;
         if ($this->enabled != 'Enable') {
-            $this->message[] = array('message' => __('Invalid payment method', 'wcmp-razorpay-checkout-gateway'), 'type' => 'error');
+            $this->message[] = array('message' => __('Invalid payment method', 'mvx-razorpay-checkout-gateway'), 'type' => 'error');
             return false;
         } else if (!$this->key_id && !$this->key_secret) {
-            $this->message[] = array('message' => __('Razorpay payout setting is not configured properly. Please contact site administrator', 'wcmp-razorpay-checkout-gateway'), 'type' => 'error');
+            $this->message[] = array('message' => __('Razorpay payout setting is not configured properly. Please contact site administrator', 'mvx-razorpay-checkout-gateway'), 'type' => 'error');
             return false;
         } else if (!$this->reciver_email) {
-            $this->message[] = array('message' => __('Please update your Razorpay Account information to receive commission', 'wcmp-razorpay-checkout-gateway'), 'type' => 'error');
+            $this->message[] = array('message' => __('Please update your Razorpay Account information to receive commission', 'mvx-razorpay-checkout-gateway'), 'type' => 'error');
             return false;
         }
 
         if ($this->transaction_mode != 'admin') {
             /* handel thesold time */
-            $threshold_time = isset($WCMp->vendor_caps->payment_cap['commission_threshold_time']) && !empty($WCMp->vendor_caps->payment_cap['commission_threshold_time']) ? $WCMp->vendor_caps->payment_cap['commission_threshold_time'] : 0;
+            $threshold_time = isset($MVX->vendor_caps->payment_cap['commission_threshold_time']) && !empty($MVX->vendor_caps->payment_cap['commission_threshold_time']) ? $MVX->vendor_caps->payment_cap['commission_threshold_time'] : 0;
             if ($threshold_time > 0) {
                 foreach ($this->commissions as $index => $commission) {
                     if (intval((date('U') - get_the_date('U', $commission)) / (3600 * 24)) < $threshold_time) {
@@ -78,11 +78,11 @@ class WCMp_Gateway_RazorPay extends WCMp_Payment_Gateway {
                 }
             }
             /* handel thesold amount */
-            $thesold_amount = isset($WCMp->vendor_caps->payment_cap['commission_threshold']) && !empty($WCMp->vendor_caps->payment_cap['commission_threshold']) ? $WCMp->vendor_caps->payment_cap['commission_threshold'] : 0;
+            $thesold_amount = isset($MVX->vendor_caps->payment_cap['commission_threshold']) && !empty($MVX->vendor_caps->payment_cap['commission_threshold']) ? $MVX->vendor_caps->payment_cap['commission_threshold'] : 0;
             if ($this->get_transaction_total() > $thesold_amount) {
                 return true;
             } else {
-                $this->message[] = array('message' => __('Minimum thesold amount to withdrawal commission is ' . $thesold_amount, 'wcmp-razorpay-checkout-gateway'), 'type' => 'error');
+                $this->message[] = array('message' => __('Minimum thesold amount to withdrawal commission is ' . $thesold_amount, 'mvx-razorpay-checkout-gateway'), 'type' => 'error');
                 return false;
             }
         }
@@ -96,7 +96,7 @@ class WCMp_Gateway_RazorPay extends WCMp_Payment_Gateway {
             foreach ($this->commissions as $commission_id) {
                 $commissionResponse = array();
                 //check the order is payed with razor pay or not!!
-                $vendor_order_id = wcmp_get_commission_order_id($commission_id);
+                $vendor_order_id = mvx_get_commission_order_id($commission_id);
                 //get order details
                 if ($vendor_order_id) {
                     $vendor_order = wc_get_order($vendor_order_id);
@@ -109,11 +109,11 @@ class WCMp_Gateway_RazorPay extends WCMp_Payment_Gateway {
                         $order_transaction_id = $parent_order ? $parent_order->get_transaction_id() : 0;
 
                         //get commission amount to be transferred and commission note
-                        $commission_amount = WCMp_Commission::commission_totals($commission_id, 'edit');
+                        $commission_amount = MVX_Commission::commission_totals($commission_id, 'edit');
                         $transaction_total = (float) $commission_amount;
                         $amount_to_pay = round($transaction_total - ($this->transfer_charge($this->transaction_mode)/count($this->commissions)) - $this->gateway_charge(), 2);
-                        $note = sprintf(__('Total commissions earned from %1$s as at %2$s on %3$s', 'wcmp-razorpay-checkout-gateway'), get_bloginfo('name'), date('H:i:s'), date('d-m-Y'));
-                        $acceptedOrderStatus = apply_filters('wcmp_razorpay_payment_order_status', array('processing', 'on-hold', 'completed'));
+                        $note = sprintf(__('Total commissions earned from %1$s as at %2$s on %3$s', 'mvx-razorpay-checkout-gateway'), get_bloginfo('name'), date('H:i:s'), date('d-m-Y'));
+                        $acceptedOrderStatus = apply_filters('mvx_razorpay_payment_order_status', array('processing', 'on-hold', 'completed'));
                         //check payment mode
                         if ($paymentMode != 'razorpay') {
                             //payment method is not valid

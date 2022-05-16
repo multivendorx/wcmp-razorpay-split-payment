@@ -1,6 +1,6 @@
 <?php
 
-class WCMp_Settings_Payment_Razorpay {
+class MVX_Settings_Payment_Razorpay {
 
     /**
      * Holds the values to be used in the fields callbacks
@@ -17,7 +17,7 @@ class WCMp_Settings_Payment_Razorpay {
     public function __construct($tab, $subsection) {
         $this->tab = $tab;
         $this->subsection = $subsection;
-        $this->options = get_option("wcmp_{$this->tab}_{$this->subsection}_settings_name");
+        $this->options = get_option("mvx_{$this->tab}_{$this->subsection}_settings_name");
         $this->settings_page_init();
     }
 
@@ -25,15 +25,15 @@ class WCMp_Settings_Payment_Razorpay {
      * Register and add settings
      */
     public function settings_page_init() {
-        global $WCMp;
+        global $MVX;
         $settings_tab_options = array("tab" => "{$this->tab}",
             "ref" => &$this,
             "subsection" => "{$this->subsection}",
             "sections" => array(
-                "wcmp_payment_razorpay_payout_settings_section" => array("title" => __('Razorpay setting', 'wcmp-razorpay-checkout-gateway'),
+                "mvx_payment_razorpay_payout_settings_section" => array("title" => __('Razorpay setting', 'mvx-razorpay-checkout-gateway'),
                     "fields" => array(
                         "key_id" => array(
-                            'title' => __('Key ID', 'wcmp-razorpay-checkout-gateway'),
+                            'title' => __('Key ID', 'mvx-razorpay-checkout-gateway'),
                             'type' => 'text',
                             'id' => 'key_id',
                             'label_for' => 'key_id',
@@ -41,20 +41,20 @@ class WCMp_Settings_Payment_Razorpay {
                             'dfvalue' => $this->key_id
                         ),
                         "key_secret" => array(
-                            'title' => __('Key Secret', 'wcmp-razorpay-checkout-gateway'),
+                            'title' => __('Key Secret', 'mvx-razorpay-checkout-gateway'),
                             'type' => 'text',
                             'id' => 'key_secret',
                             'label_for' => 'key_secret',
                             'name' => 'key_secret',
                             'dfvalue' => $this->key_secret
                         ),
-                        "is_split" => array('title' => __('Enable Split Payment', 'wcmp-razorpay-checkout-gateway'), 'type' => 'checkbox', 'id' => 'is_split', 'label_for' => 'is_split', 'name' => 'is_split', 'value' => 'Enable'), // Checkbox
+                        "is_split" => array('title' => __('Enable Split Payment', 'mvx-razorpay-checkout-gateway'), 'type' => 'checkbox', 'id' => 'is_split', 'label_for' => 'is_split', 'name' => 'is_split', 'value' => 'Enable'), // Checkbox
                     ),
                 )
             ),
         );
 
-        $WCMp->admin->settings->settings_field_withsubtab_init(
+        $MVX->admin->settings->settings_field_withsubtab_init(
             apply_filters("settings_{$this->tab}_{$this->subsection}_tab_options", $settings_tab_options)
         );
     }
@@ -64,7 +64,7 @@ class WCMp_Settings_Payment_Razorpay {
      *
      * @param array $input Contains all settings fields as array keys
      */
-    public function wcmp_payment_razorpay_payout_settings_sanitize($input) {
+    public function mvx_payment_razorpay_payout_settings_sanitize($input) {
         $new_input = array();
         $hasError = false;
         if (isset($input['key_id'])) {
@@ -78,9 +78,9 @@ class WCMp_Settings_Payment_Razorpay {
         }
         if (!$hasError) {
             add_settings_error(
-                    "wcmp_{$this->tab}_{$this->subsection}_settings_name",
-                    esc_attr("wcmp_{$this->tab}_{$this->subsection}_settings_admin_updated"),
-                    __('Razorpay Payout Settings Updated', 'wcmp-razorpay-checkout-gateway'),
+                    "mvx_{$this->tab}_{$this->subsection}_settings_name",
+                    esc_attr("mvx_{$this->tab}_{$this->subsection}_settings_admin_updated"),
+                    __('Razorpay Payout Settings Updated', 'mvx-razorpay-checkout-gateway'),
                     'updated'
             );
         }

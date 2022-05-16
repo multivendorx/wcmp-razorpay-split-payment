@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/../wcmp-razorpay-checkout-gateway.php';
+require_once __DIR__.'/../mvx-razorpay-checkout-gateway.php';
 require_once __DIR__.'/../razorpay-sdk/Razorpay.php';
 
 use Razorpay\Api\Api;
