@@ -5,12 +5,8 @@ class MVX_Razorpay_Checkout_Gateway_Admin {
     public function __construct() {
         add_filter( 'automatic_payment_method', array( $this, 'admin_razorpay_payment_mode'), 20);
         add_filter( 'mvx_vendor_payment_mode', array( $this, 'vendor_razorpay_payment_mode' ), 20);
-        add_filter("settings_vendors_payment_tab_options", array( $this, 'mvx_setting_razorpay_account_id' ), 90, 2 );
-        add_action( 'settings_page_payment_razorpay_tab_init', array( &$this, 'payment_razorpay_init' ), 10, 2 );
-        add_filter('mvx_tabsection_payment', array( $this, 'mvx_tabsection_payment_razorpay' ) );
         add_filter('mvx_vendor_user_fields', array( $this, 'mvx_vendor_user_fields_for_razorpay' ), 10, 2 );
         add_action('mvx_after_vendor_billing', array($this, 'mvx_after_vendor_billing_for_razorpay'));
-
         // mvx settings
         add_filter('mvx_multi_tab_array_list', array($this, 'mvx_multi_tab_array_list_for_razorpay'));
         add_filter('mvx_settings_fields_details', array($this, 'mvx_settings_fields_details_for_razorpay'));
@@ -57,30 +53,12 @@ class MVX_Razorpay_Checkout_Gateway_Admin {
         return $payment_mode;
     }
 
-    public function mvx_setting_razorpay_account_id( $payment_tab_options, $vendor_obj ) {
-        $payment_tab_options['vendor_razorpay_account_id'] = array('label' => __('Account Number', 'mvx-razorpay-checkout-gateway'), 'type' => 'text', 'id' => 'vendor_razorpay_account_id', 'label_for' => 'vendor_razorpay_account_id', 'name' => 'vendor_razorpay_account_id', 'value' => $vendor_obj->razorpay_account_id, 'wrapper_class' => 'payment-gateway-razorpay payment-gateway');
-        return $payment_tab_options;
-    }
-
-    public function payment_razorpay_init( $tab, $subsection ) {
-        global $MVX_Razorpay_Checkout_Gateway;
-        require_once $MVX_Razorpay_Checkout_Gateway->plugin_path . 'admin/class-mvx-settings-payment-razorpay.php';
-        new MVX_Settings_Payment_Razorpay( $tab, $subsection );
-    }
-
-    public function mvx_tabsection_payment_razorpay($tabsection_payment) {
-        if ( 'Enable' === get_mvx_vendor_settings( 'payment_method_razorpay', 'payment' ) ) {
-            $tabsection_payment['razorpay'] = array( 'title' => __( 'Razorpay', 'mvx-razorpay-checkout-gateway' ), 'icon' => 'dashicons-admin-settings' );
-        }
-        return $tabsection_payment;
-    }
-
     // mvx work
     public function mvx_multi_tab_array_list_for_razorpay($tab_link) {
         $tab_link['marketplace-payments'][] = array(
-            'tablabel'      =>  __('Razorpay', 'dc-woocommerce-multi-vendor'),
+            'tablabel'      =>  __('Razorpay', 'mvx-razorpay-checkout-gateway'),
             'apiurl'        =>  'mvx_module/v1/save_dashpages',
-            'description'   =>  __('Razorpay makes it easy for you to pay multiple sellers at the sametime', 'dc-woocommerce-multi-vendor'),
+            'description'   =>  __('Razorpay makes it easy for you to pay multiple sellers at the sametime', 'mvx-razorpay-checkout-gateway'),
             'icon'          =>  'module-razorpay',
             'submenu'       =>  'payment',
             'modulename'    =>  'payment-razorpay'
@@ -93,24 +71,24 @@ class MVX_Razorpay_Checkout_Gateway_Admin {
             [
                 'key'       => 'key_id',
                 'type'      => 'text',
-                'label'     => __( 'Key ID', 'dc-woocommerce-multi-vendor' ),
+                'label'     => __( 'Key ID', 'mvx-razorpay-checkout-gateway' ),
                 'database_value' => '',
             ],
             [
                 'key'       => 'key_secret',
                 'type'      => 'text',
-                'label'     => __( 'Key Secret', 'dc-woocommerce-multi-vendor' ),
+                'label'     => __( 'Key Secret', 'mvx-razorpay-checkout-gateway' ),
                 'database_value' => '',
             ],
             [
                 'key'    => 'is_split',
-                'label'   => __( 'Enable Split Payment', 'dc-woocommerce-multi-vendor' ),
+                'label'   => __( 'Enable Split Payment', 'mvx-razorpay-checkout-gateway' ),
                 'type'    => 'checkbox',
                 'class'     => 'mvx-toggle-checkbox',
                 'options' => array(
                     array(
                         'key'=> "is_split",
-                        'label'=> __('', 'dc-woocommerce-multi-vendor'),
+                        'label'=> __('', 'mvx-razorpay-checkout-gateway'),
                         'value'=> "is_split"
                     )
                 ),
