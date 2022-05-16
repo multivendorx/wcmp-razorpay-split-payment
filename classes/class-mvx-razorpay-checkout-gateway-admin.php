@@ -10,6 +10,10 @@ class MVX_Razorpay_Checkout_Gateway_Admin {
         add_filter('mvx_tabsection_payment', array( $this, 'mvx_tabsection_payment_razorpay' ) );
         add_filter('mvx_vendor_user_fields', array( $this, 'mvx_vendor_user_fields_for_razorpay' ), 10, 2 );
         add_action('mvx_after_vendor_billing', array($this, 'mvx_after_vendor_billing_for_razorpay'));
+
+        // mvx settings
+        add_filter('mvx_multi_tab_array_list', array($this, 'mvx_multi_tab_array_list_for_razorpay'));
+        add_filter('mvx_settings_fields_details', array($this, 'mvx_settings_fields_details_for_razorpay'));
     }
 
     public function mvx_after_vendor_billing_for_razorpay() {
@@ -69,5 +73,50 @@ class MVX_Razorpay_Checkout_Gateway_Admin {
             $tabsection_payment['razorpay'] = array( 'title' => __( 'Razorpay', 'mvx-razorpay-checkout-gateway' ), 'icon' => 'dashicons-admin-settings' );
         }
         return $tabsection_payment;
+    }
+
+    // mvx work
+    public function mvx_multi_tab_array_list_for_razorpay($tab_link) {
+        $tab_link['marketplace-payments'][] = array(
+            'tablabel'      =>  __('Razorpay', 'dc-woocommerce-multi-vendor'),
+            'apiurl'        =>  'mvx_module/v1/save_dashpages',
+            'description'   =>  __('Razorpay makes it easy for you to pay multiple sellers at the sametime', 'dc-woocommerce-multi-vendor'),
+            'icon'          =>  'module-razorpay',
+            'submenu'       =>  'payment',
+            'modulename'    =>  'payment-razorpay'
+        );
+        return $tab_link;
+    }
+    
+    public function mvx_settings_fields_details_for_razorpay($settings_fileds) {
+        $settings_fileds['payment-razorpay'] = [
+            [
+                'key'       => 'key_id',
+                'type'      => 'text',
+                'label'     => __( 'Key ID', 'dc-woocommerce-multi-vendor' ),
+                'database_value' => '',
+            ],
+            [
+                'key'       => 'key_secret',
+                'type'      => 'text',
+                'label'     => __( 'Key Secret', 'dc-woocommerce-multi-vendor' ),
+                'database_value' => '',
+            ],
+            [
+                'key'    => 'is_split',
+                'label'   => __( 'Enable Split Payment', 'dc-woocommerce-multi-vendor' ),
+                'type'    => 'checkbox',
+                'class'     => 'mvx-toggle-checkbox',
+                'options' => array(
+                    array(
+                        'key'=> "is_split",
+                        'label'=> __('', 'dc-woocommerce-multi-vendor'),
+                        'value'=> "is_split"
+                    )
+                ),
+                'database_value' => array(),
+            ],
+        ];
+        return $settings_fileds;
     }
 }
