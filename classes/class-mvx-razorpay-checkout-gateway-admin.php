@@ -55,14 +55,16 @@ class MVX_Razorpay_Checkout_Gateway_Admin {
 
     // mvx work
     public function mvx_multi_tab_array_list_for_razorpay($tab_link) {
-        $tab_link['marketplace-payments'][] = array(
-            'tablabel'      =>  __('Razorpay', 'mvx-razorpay-checkout-gateway'),
-            'apiurl'        =>  'mvx_module/v1/save_dashpages',
-            'description'   =>  __('Razorpay makes it easy for you to pay multiple sellers at the sametime', 'mvx-razorpay-checkout-gateway'),
-            'icon'          =>  'module-razorpay',
-            'submenu'       =>  'payment',
-            'modulename'    =>  'payment-razorpay'
-        );
+        if (mvx_is_module_active('razorpay')) {
+            $tab_link['marketplace-payments'][] = array(
+                'tablabel'      =>  __('Razorpay', 'mvx-razorpay-checkout-gateway'),
+                'apiurl'        =>  'mvx_module/v1/save_dashpages',
+                'description'   =>  __('Razorpay makes it easy for you to pay multiple sellers at the sametime', 'mvx-razorpay-checkout-gateway'),
+                'icon'          =>  'module-razorpay',
+                'submenu'       =>  'payment',
+                'modulename'    =>  'payment-razorpay'
+            );
+        }
         return $tab_link;
     }
     
