@@ -10,6 +10,8 @@ class MVX_Razorpay_Checkout_Gateway_Admin {
         // mvx settings
         add_filter('mvx_multi_tab_array_list', array($this, 'mvx_multi_tab_array_list_for_razorpay'));
         add_filter('mvx_settings_fields_details', array($this, 'mvx_settings_fields_details_for_razorpay'));
+        add_filter('mvx_payment_method_disbursement_options', array($this, 'mvx_payment_method_disbursement_options_for_razorpay'));
+        
     }
 
     public function mvx_after_vendor_billing_for_razorpay() {
@@ -98,5 +100,16 @@ class MVX_Razorpay_Checkout_Gateway_Admin {
             ],
         ];
         return $settings_fileds;
+    }
+
+    public function mvx_payment_method_disbursement_options_for_razorpay($disburse_methods) {
+        if (mvx_is_module_active('razorpay')) {
+            $disburse_methods[] = array(
+                'key'=> "razorpay_connect",
+                'label'=> __('Razorpay', 'dc-woocommerce-multi-vendor'),
+                'value'=> "razorpay_connect"
+            );
+        }
+        return $disburse_methods;
     }
 }
