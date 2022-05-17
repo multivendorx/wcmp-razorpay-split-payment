@@ -4,7 +4,7 @@
  * WC Dependency Checker
  *
  */
-class WCMP_Razorpay_Checkout_Gateway_Dependencies {
+class MVX_Razorpay_Checkout_Gateway_Dependencies {
 
     private static $active_plugins;
 
@@ -21,11 +21,11 @@ class WCMP_Razorpay_Checkout_Gateway_Dependencies {
         return in_array('woocommerce/woocommerce.php', self::$active_plugins) || array_key_exists('woocommerce/woocommerce.php', self::$active_plugins);
     }
     
-    public static function wcmp_active_check() {
+    public static function mvx_active_check() {
         if (!self::$active_plugins) {
             self::init();
         }
-        return in_array('dc-woocommerce-multi-vendor/dc_product_vendor.php', self::$active_plugins) || array_key_exists('dc-woocommerce-multi-vendor/dc_product_vendor.php', self::$active_plugins);
+        return in_array('MultivendorX/dc_product_vendor.php', self::$active_plugins) || array_key_exists('dc-woocommerce-multi-vendor/dc_product_vendor.php', self::$active_plugins);
     }
     public static function others_razorpay_plugin_active_check() {
         if (!self::$active_plugins) {
