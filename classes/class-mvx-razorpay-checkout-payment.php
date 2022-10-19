@@ -391,7 +391,7 @@ function woocommerce_razorpay_init()
          */
         private function getDefaultCheckoutArguments($order)
         {
-            global $WCMP_Razorpay_Checkout_Gateway;
+            global $MVX_Razorpay_Checkout_Gateway;
             $callbackUrl = $this->getRedirectUrl();
 
             $orderId = $order->get_order_number();
@@ -409,7 +409,7 @@ function woocommerce_razorpay_init()
                 'prefill'      => $this->getCustomerInfo($order),
                 '_'            => array(
                     'integration'                   => 'woocommerce',
-                    'integration_version'           => $WCMP_Razorpay_Checkout_Gateway->version,
+                    'integration_version'           => $MVX_Razorpay_Checkout_Gateway->version,
                     'integration_parent_version'    => WOOCOMMERCE_VERSION,
                 ),
             );
@@ -470,7 +470,7 @@ function woocommerce_razorpay_init()
         protected function createRazorpayOrderId($orderId, $sessionKey)
         {
             // Calls the helper function to create order data
-            global $woocommerce, $WCMp;
+            global $woocommerce, $MVX;
 
             $api = $this->getRazorpayApiInstance();
 
@@ -485,16 +485,16 @@ function woocommerce_razorpay_init()
             }
 
             $razorpayOrderId = $razorpayOrder['id'];
-            if (WCMP_Razorpay_Checkout_Gateway_Dependencies::wcmp_active_check()) {
+            if (MVX_Razorpay_Checkout_Gateway_Dependencies::mvx_active_check()) {
                 $create_vendor_transaction = $this->create_transaction_fron_order($orderId);
-                $is_split = get_wcmp_vendor_settings('is_split', 'payment', 'razorpay');
+                $is_split = get_mvx_vendor_settings('is_split', 'payment_razorpay');
                 if ($razorpayOrderId && !empty($is_split)) {
                     if (!empty($create_vendor_transaction)) {
                         foreach ($create_vendor_transaction as $vendor_id => $commission_ids) {
-                            $WCMp->payment_gateway->payment_gateways['razorpay']->vendor = get_wcmp_vendor($vendor_id);
-                            $WCMp->payment_gateway->payment_gateways['razorpay']->commissions = array_unique($commission_ids);
-                            $WCMp->payment_gateway->payment_gateways['razorpay']->transaction_mode = 'auto';
-                            $WCMp->payment_gateway->payment_gateways['razorpay']->record_transaction();
+                            $MVX->payment_gateway->payment_gateways['razorpay']->vendor = get_mvx_vendor($vendor_id);
+                            $MVX->payment_gateway->payment_gateways['razorpay']->commissions = array_unique($commission_ids);
+                            $MVX->payment_gateway->payment_gateways['razorpay']->transaction_mode = 'auto';
+                            $MVX->payment_gateway->payment_gateways['razorpay']->record_transaction();
                         }
                     }
                 }
@@ -512,17 +512,17 @@ function woocommerce_razorpay_init()
 
         public function create_transaction_fron_order($orderId = '') {
             $receivers = array();
-            if(WCMP_Razorpay_Checkout_Gateway_Dependencies::wcmp_active_check()) {
-                $suborders_list = get_wcmp_suborders( $orderId ); 
+            if(MVX_Razorpay_Checkout_Gateway_Dependencies::mvx_active_check()) {
+                $suborders_list = get_mvx_suborders( $orderId ); 
                 if( $suborders_list ) {
                     foreach( $suborders_list as $suborder ) {
-                        $vendor = get_wcmp_vendor( get_post_field( 'post_author', $suborder->get_id() ) );
+                        $vendor = get_mvx_vendor( get_post_field( 'post_author', $suborder->get_id() ) );
                         $vendor_payment_method = get_user_meta( $vendor->id, '_vendor_payment_mode', true );
                         $vendor_razorpay_account_id = get_user_meta( $vendor->id, '_vendor_razorpay_account_id', true );
                         $vendor_payment_method_check = $vendor_payment_method == 'razorpay' ? true : false;
-                        $razorpay_enabled = apply_filters('wcmp_razorpay_enabled', $vendor_payment_method_check);
+                        $razorpay_enabled = apply_filters('mvx_razorpay_enabled', $vendor_payment_method_check);
                         if ( $razorpay_enabled && $vendor_razorpay_account_id ) {
-                            $vendor_order = wcmp_get_order( $suborder->get_id() );
+                            $vendor_order = mvx_get_order( $suborder->get_id() );
                             $vendor_commission = round( $vendor_order->get_commission_total( 'edit' ), 2 );
                             $commission_id = get_post_meta($suborder->get_id(), '_commission_id', true) ? get_post_meta($suborder->get_id(), '_commission_id') : array();
                             if ($vendor_commission > 0 && $commission_id) {
@@ -588,8 +588,8 @@ function woocommerce_razorpay_init()
                 ),
             );
 
-            if (WCMP_Razorpay_Checkout_Gateway_Dependencies::wcmp_active_check()) {
-                $is_split = get_wcmp_vendor_settings('is_split', 'payment', 'razorpay');
+            if (MVX_Razorpay_Checkout_Gateway_Dependencies::mvx_active_check()) {
+                $is_split = get_mvx_vendor_settings('is_split', 'payment_razorpay');
                 if (!empty($is_split)) {
                     $payment_distribution_list = $this->generate_payment_distribution_list($orderId);
                     if( isset( $payment_distribution_list['transfers'] ) && !empty( $payment_distribution_list['transfers'] ) && count( $payment_distribution_list['transfers'] ) > 0 ) {
@@ -605,17 +605,17 @@ function woocommerce_razorpay_init()
             $args = array();
             $receivers = array();
             $total_vendor_commission = 0;
-            if(WCMP_Razorpay_Checkout_Gateway_Dependencies::wcmp_active_check()) {
-                $suborders_list = get_wcmp_suborders( $order ); 
+            if(MVX_Razorpay_Checkout_Gateway_Dependencies::mvx_active_check()) {
+                $suborders_list = get_mvx_suborders( $order ); 
                 if( $suborders_list ) {
                     foreach( $suborders_list as $suborder ) {
-                        $vendor = get_wcmp_vendor( get_post_field( 'post_author', $suborder->get_id() ) );
+                        $vendor = get_mvx_vendor( get_post_field( 'post_author', $suborder->get_id() ) );
                         $vendor_payment_method = get_user_meta( $vendor->id, '_vendor_payment_mode', true );
                         $vendor_razorpay_account_id = get_user_meta( $vendor->id, '_vendor_razorpay_account_id', true );
                         $vendor_payment_method_check = $vendor_payment_method == 'razorpay' ? true : false;
-                        $razorpay_enabled = apply_filters('wcmp_razorpay_enabled', $vendor_payment_method_check);
+                        $razorpay_enabled = apply_filters('mvx_razorpay_enabled', $vendor_payment_method_check);
                         if ( $razorpay_enabled && $vendor_razorpay_account_id ) {
-                            $vendor_order = wcmp_get_order( $suborder->get_id() );
+                            $vendor_order = mvx_get_order( $suborder->get_id() );
                             $vendor_commission = round( $vendor_order->get_commission_total( 'edit' ), 2 );
                             if ($vendor_commission > 0) {
                                 $receivers[] = array(

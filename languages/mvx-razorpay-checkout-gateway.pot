@@ -1,9 +1,9 @@
 # Copyright (C) 2021 WC Marketplace
-# This file is distributed under the same license as the WCMp Vendor Membership package.
+# This file is distributed under the same license as the MVX Vendor Membership package.
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: WCMp Vendor Membership 2.1\n"
+"Project-Id-Version: MVX Vendor Membership 2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/dualcube/dc-woocommerce-multi-"
 "vendor/issues\n"
 "POT-Creation-Date: 2021-05-19 06:22+0000\n"
@@ -17,26 +17,26 @@ msgstr ""
 "Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
 
-#: includes/wcmp-razorpay-checkout-gateway-core-functions.php:18
+#: includes/mvx-razorpay-checkout-gateway-core-functions.php:18
 #, php-format
 msgid ""
-"%sWCMp Razorpay Checkout Gateway is inactive. %s Please deactivate others "
+"%sMVX Razorpay Checkout Gateway is inactive. %s Please deactivate others "
 "razorpay plugin to bypass conflict"
 msgstr ""
 
-#: includes/wcmp-razorpay-checkout-gateway-core-functions.php:8
+#: includes/mvx-razorpay-checkout-gateway-core-functions.php:8
 #, php-format
 msgid ""
-"%sWCMp Razorpay Checkout Gateway is inactive.%s The %sWooCommerce plugin%s "
-"must be active for the WCMp Razorpay Checkout Gateway to work. Please "
+"%sMVX Razorpay Checkout Gateway is inactive.%s The %sWooCommerce plugin%s "
+"must be active for the MVX Razorpay Checkout Gateway to work. Please "
 "%sinstall & activate WooCommerce%s"
 msgstr ""
 
-#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:57
+#: classes/class-mvx-razorpay-checkout-gateway-admin.php:57
 msgid "Account Number"
 msgstr ""
 
-#: admin/class-wcmp-settings-payment-razorpay.php:51
+#: admin/class-mvx-settings-payment-razorpay.php:51
 msgid "Enable Split Payment"
 msgstr ""
 
@@ -45,56 +45,56 @@ msgstr ""
 msgid "https://wc-marketplace.com/"
 msgstr ""
 
-#: classes/class-wcmp-gateway-razor-pay.php:58
+#: classes/class-mvx-gateway-razor-pay.php:58
 msgid "Invalid payment method"
 msgstr ""
 
-#: admin/class-wcmp-settings-payment-razorpay.php:36
+#: admin/class-mvx-settings-payment-razorpay.php:36
 msgid "Key ID"
 msgstr ""
 
-#: admin/class-wcmp-settings-payment-razorpay.php:44
+#: admin/class-mvx-settings-payment-razorpay.php:44
 msgid "Key Secret"
 msgstr ""
 
-#: classes/class-wcmp-gateway-razor-pay.php:45
+#: classes/class-mvx-gateway-razor-pay.php:45
 msgid "New transaction has been initiated"
 msgstr ""
 
-#: classes/class-wcmp-gateway-razor-pay.php:64
+#: classes/class-mvx-gateway-razor-pay.php:64
 msgid "Please update your Razorpay Account information to receive commission"
 msgstr ""
 
-#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:43
-#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:51
-#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:69
+#: classes/class-mvx-razorpay-checkout-gateway-admin.php:43
+#: classes/class-mvx-razorpay-checkout-gateway-admin.php:51
+#: classes/class-mvx-razorpay-checkout-gateway-admin.php:69
 msgid "Razorpay"
 msgstr ""
 
-#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:21
-#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:23
+#: classes/class-mvx-razorpay-checkout-gateway-admin.php:21
+#: classes/class-mvx-razorpay-checkout-gateway-admin.php:23
 msgid "Razorpay Account Id"
 msgstr ""
 
-#: classes/class-wcmp-gateway-razor-pay.php:61
+#: classes/class-mvx-gateway-razor-pay.php:61
 msgid ""
 "Razorpay payout setting is not configured properly. Please contact site "
 "administrator"
 msgstr ""
 
-#: admin/class-wcmp-settings-payment-razorpay.php:83
+#: admin/class-mvx-settings-payment-razorpay.php:83
 msgid "Razorpay Payout Settings Updated"
 msgstr ""
 
-#: classes/class-wcmp-razorpay-checkout-gateway-admin.php:33
+#: classes/class-mvx-razorpay-checkout-gateway-admin.php:33
 msgid "Razorpay Route Account Id"
 msgstr ""
 
-#: admin/class-wcmp-settings-payment-razorpay.php:33
+#: admin/class-mvx-settings-payment-razorpay.php:33
 msgid "Razorpay setting"
 msgstr ""
 
-#: classes/class-wcmp-gateway-razor-pay.php:113
+#: classes/class-mvx-gateway-razor-pay.php:113
 #, php-format
 msgid "Total commissions earned from %1$s as at %2$s on %3$s"
 msgstr ""
@@ -105,10 +105,10 @@ msgstr ""
 
 #. Description of the plugin
 msgid ""
-"WCMp Razorpay Split Checkout Gateway is a payment gateway for pay with "
-"woocommerce as well as split payment with WCMp multivendor marketplace."
+"MVX Razorpay Split Checkout Gateway is a payment gateway for pay with "
+"woocommerce as well as split payment with MVX multivendor marketplace."
 msgstr ""
 
 #. Name of the plugin
-msgid "WCMp Razorpay Split Payment"
+msgid "MVX Razorpay Split Payment"
 msgstr ""
